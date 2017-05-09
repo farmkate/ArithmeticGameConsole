@@ -19,12 +19,12 @@ namespace MultiplicationTables
             string input;
             int intA = 1;
             int intB = 2;
-            bool inputTest;
+            bool inputTest = false;
             int tableMax = 100;
             int tableMin = 2;
-            int minInt;
-            int maxInt;
-            int numTables;
+            //int minInt;
+            int maxInt = 0;
+            int numTables = 0;
             int answer;
             int numCorrect = 0;
 
@@ -37,31 +37,25 @@ namespace MultiplicationTables
             {
                 string gameChoice = GetUserSelection("View Games", gameChoices);
 
-                Console.WriteLine("\n******* Welcome to {0}! *******", gameChoice);
+                Console.WriteLine("\n******* Welcome to {0}! *******", gameChoice);// gameChoice is the key in dictionary
 
 
                 if (gameChoice.Equals("Multiplication Quiz"))
                 {
-                    do
-                    {
-                        Console.Write("How many tables do you want to run (between {0} and {1}?  ", tableMin, tableMax);
-                        input = Console.ReadLine();
-                        numTables = Int32.Parse(input);
-                        inputTest = input == "" || numTables < tableMin || numTables > tableMax;
-                    } while (inputTest); //TODO: add a comparison to tell if input is a char or a string
+                    numTables = HowManyTables(tableMin, tableMax, numTables, inputTest);
 
-                    Console.Write("What is the largest integer (between 0 and 20) that you want to multiply by?  ");
-                    input = Console.ReadLine();
-                    maxInt = Int32.Parse(input);
+                    maxInt = LargestInteger(maxInt);
 
                     //create display for tables.
                     for (int i = 0; i < numTables; i++)
                     {
-                        //TODO: create random intA between zero and maxInt
-                        intA = r1.Next(maxInt);
-                        //TODO: create ramdom intB between zero and maxInt
-                        intB = r2.Next(maxInt);
-                        Console.WriteLine("\nWhat is {0} times {1}? ", intA, intB);
+                        //TODO: DONE create random intA between zero and maxInt
+                        intA = r1.Next(1, maxInt);
+                        //TODO: Done create ramdom intB between zero and maxInt
+                        intB = r2.Next(1, maxInt);
+                        //TODO: add operator to dictionary so that there only needs to be one method that works for all operations.
+                        Console.WriteLine("\nWhat is {0} * {1}? ", intA, intB);
+                        Console.Write("Answer: ");
                         input = Console.ReadLine();
                         answer = Int32.Parse(input);
                         if (answer == intA * intB)
@@ -77,18 +71,84 @@ namespace MultiplicationTables
                     }
                     //at the end display the number correct out of the total number of tables
                     Console.WriteLine("\nYou got {0} out of {1} correct.", numCorrect, numTables);
+                    Console.Write("\nPress any key or ctrl+c to quit.");
 
                     Console.ReadLine();
                 }
-                else if (gameChoice.Equals("Division Quiz"))
+                else if (gameChoice.Equals("Addition Quiz"))
                 {
-                    Console.WriteLine("Quiz Under Construction...check back.");
+                    numTables = HowManyTables(tableMin, tableMax, numTables, inputTest);
 
+                    maxInt = LargestInteger(maxInt);
+
+                    //create display for tables.
+                    for (int i = 0; i < numTables; i++)
+                    {
+                        //TODO: DONE create random intA between zero and maxInt
+                        intA = r1.Next(1, maxInt);
+                        //TODO: Done create ramdom intB between zero and maxInt
+                        intB = r2.Next(1, maxInt);
+                        //TODO: add operator to dictionary so that there only needs to be one method that works for all operations.
+                        Console.WriteLine("\nWhat is {0} + {1}? ", intA, intB);
+                        Console.Write("Answer: ");
+                        input = Console.ReadLine();
+                        answer = Int32.Parse(input);
+                        if (answer == intA + intB)
+                        {
+                            Console.WriteLine("Correct!");
+                            numCorrect++;
+                        }
+                        else
+                        {
+                            Console.WriteLine("That wasn't correct.");
+                        }
+
+                    }
+                    //at the end display the number correct out of the total number of tables
+                    Console.WriteLine("\nYou got {0} out of {1} correct.", numCorrect, numTables);
+                    Console.Write("\nPress any key or ctrl+c to quit.");
+
+                    Console.ReadLine();
+                }
+                else if (gameChoice.Equals("Subtraction Quiz"))
+                {
+                    numTables = HowManyTables(tableMin, tableMax, numTables, inputTest);
+
+                    maxInt = LargestInteger(maxInt);
+
+                    //create display for tables.
+                    for (int i = 0; i < numTables; i++)
+                    {
+                        //TODO: DONE create random intA between zero and maxInt
+                        intA = r1.Next(1, maxInt);
+                        //TODO: Done create ramdom intB between zero and maxInt
+                        intB = r2.Next(1, maxInt);
+                        //TODO: add operator to dictionary so that there only needs to be one method that works for all operations.
+                        Console.WriteLine("\nWhat is {0} - {1}? ", intA, intB);
+                        Console.Write("Answer: ");
+                        input = Console.ReadLine();
+                        answer = Int32.Parse(input);
+                        if (answer == intA - intB)
+                        {
+                            Console.WriteLine("Correct!");
+                            numCorrect++;
+                        }
+                        else
+                        {
+                            Console.WriteLine("That wasn't correct.");
+                        }
+
+                    }
+                    //at the end display the number correct out of the total number of tables
+                    Console.WriteLine("\nYou got {0} out of {1} correct.", numCorrect, numTables);
+
+                    Console.Write("\nPress any key or ctrl+c to quit.");
                     Console.ReadLine();
                 }
                 else
                 {
                     Console.WriteLine("Quiz Under Construction...check back.");
+                    Console.Write("\nPress any key or ctrl+c to quit.");
 
                     Console.ReadLine();
 
@@ -98,6 +158,31 @@ namespace MultiplicationTables
 
 
 
+        private static int HowManyTables(int tableMin, int tableMax, int numTables, bool inputTest)
+        {
+            do
+            {
+                Console.Write("\nHow many tables do you want to run (between {0} and {1})?  ", tableMin, tableMax);
+                string input = Console.ReadLine();
+                numTables = Int32.Parse(input);
+                inputTest = input == "" || numTables < tableMin || numTables > tableMax;
+            } while (inputTest); //TODO: add a comparison to tell if input is a char or a string
+
+            return numTables;
+        }
+
+
+        private static int LargestInteger(int maxInt)
+        {
+            do
+            {
+                Console.Write("\nWhat is the largest integer (between 1 and 20) that you want to multiply by?  ");
+                string input = Console.ReadLine();
+                maxInt = Int32.Parse(input);
+            } while (maxInt < 1 || maxInt > 20);
+
+            return maxInt;
+        }
 
 
         private static string GetUserSelection(string choiceHeader, Dictionary<string, string> choices)
@@ -123,6 +208,7 @@ namespace MultiplicationTables
                     Console.WriteLine(j + " - " + choices[choiceKeys[j]]);
                 }
 
+                Console.Write("\nChoose a game: ");
                 string input = Console.ReadLine();
                 choiceIdx = int.Parse(input);
 
